@@ -100,6 +100,7 @@ public class ImageActivity extends AppCompatActivity {
             default:
                 break;
         }
+        overridePendingTransition(0, 0);
     }
 
     private void showFromCameraOrGalleryAlert() {
@@ -283,6 +284,7 @@ public class ImageActivity extends AppCompatActivity {
         resultIntent.putExtra(ImagePicker.EXTRA_IMAGE_PATH, (Serializable) path);
         setResult(RESULT_OK, resultIntent);
         finish();
+        overridePendingTransition(0, 0);
     }
 
     private void pickImageWrapper() {
