@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -280,6 +281,17 @@ public class ImageActivity extends AppCompatActivity {
     }
 
     private void finishActivity(List<String> path) {
+
+        //-------LOGIC TO CHECK IF THAT FILE NOT EXSIST THEN CHECK IN PUBLIC STORAGE DIRECTORY------
+        for (int i = 0; i < path.size(); i++) {
+            String filePath = path.get(i);
+            if (!new File(filePath).exists()) {
+                filePath = filePath.replace("/external_files/mediapicker", Environment.getExternalStoragePublicDirectory("mediapicker").getPath());
+                path.set(i, filePath);
+            }
+        }
+        //-------LOGIC TO CHECK IF THAT FILE NOT EXSIST THEN CHECK IN PUBLIC STORAGE DIRECTORY------
+
         Intent resultIntent = new Intent();
         resultIntent.putExtra(ImagePicker.EXTRA_IMAGE_PATH, (Serializable) path);
         setResult(RESULT_OK, resultIntent);

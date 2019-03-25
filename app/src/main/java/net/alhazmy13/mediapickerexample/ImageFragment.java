@@ -31,20 +31,26 @@ public class ImageFragment extends Fragment {
     private List<String> mPath;
 
 
+    private View view;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.image_layout, container, false);
+        if (view == null) {
+            view = inflater.inflate(R.layout.image_layout, container, false);
 
-        // Find our View instances
-        imageView = view.findViewById(R.id.iv_image);
-        path = view.findViewById(R.id.tv_path);
-        view.findViewById(R.id.bt_pick).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pickImage();
-            }
-        });
+            // Find our View instances
+            imageView = view.findViewById(R.id.iv_image);
+            path = view.findViewById(R.id.tv_path);
+            view.findViewById(R.id.bt_pick).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    pickImage();
+                }
+            });
+        } else {
+            container.removeView(view);
+        }
         return view;
     }
 
@@ -76,9 +82,13 @@ public class ImageFragment extends Fragment {
 
     private void loadImage() {
         Log.d(TAG, "loadImage: " + mPath.size());
-        if (mPath != null && mPath.size() > 0) {
-            path.setText(mPath.get(0));
-            imageView.setImageBitmap(BitmapFactory.decodeFile(mPath.get(0)));
+        try {
+            if (mPath != null && mPath.size() > 0) {
+                path.setText(mPath.get(0));
+                imageView.setImageBitmap(BitmapFactory.decodeFile(mPath.get(0)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
