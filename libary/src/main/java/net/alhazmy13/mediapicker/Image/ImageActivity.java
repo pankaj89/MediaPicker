@@ -135,6 +135,7 @@ public class ImageActivity extends AppCompatActivity {
                             Log.d(ImageTags.Tags.TAG, "Alert Dialog - Canceled");
                         alertDialog.dismiss();
                         finish();
+                        overridePendingTransition(0, 0);
                     }
                 })
                 .create();
@@ -230,6 +231,7 @@ public class ImageActivity extends AppCompatActivity {
             intent.putExtra(ImageTags.Tags.PICK_ERROR, "user did not select any image");
             sendBroadcast(intent);
             finish();
+            overridePendingTransition(0, 0);
         }
     }
 
@@ -383,9 +385,9 @@ public class ImageActivity extends AppCompatActivity {
                     pickImage();
                 } else {
                     // Permission Denied
-                    Toast.makeText(ImageActivity.this, getString(R.string.media_picker_some_permission_is_denied), Toast.LENGTH_SHORT)
-                            .show();
-                    onBackPressed();
+//                    Toast.makeText(ImageActivity.this, getString(R.string.media_picker_some_permission_is_denied), Toast.LENGTH_SHORT).show();
+                    finish();
+                    overridePendingTransition(0, 0);
                 }
 
                 break;

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Environment;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -125,6 +126,7 @@ public class VideoActivity extends AppCompatActivity {
                             Log.d(VideoTags.Tags.TAG, "Alert Dialog - Canceled");
                         alertDialog.dismiss();
                         finish();
+                        overridePendingTransition(0, 0);
                     }
                 }).create();
         alertDialog.show();
@@ -217,6 +219,7 @@ public class VideoActivity extends AppCompatActivity {
             intent.putExtra(VideoTags.Tags.PICK_ERROR, "user did not select any videos");
             sendBroadcast(intent);
             finish();
+            overridePendingTransition(0, 0);
         }
     }
 
@@ -234,11 +237,23 @@ public class VideoActivity extends AppCompatActivity {
             sendBroadcast(intent);
             setResult(RESULT_CANCELED, intent);
             finish();
+            overridePendingTransition(0, 0);
         }
 
     }
 
     private void finishActivity(List<String> path) {
+
+        //-------LOGIC TO CHECK IF THAT FILE NOT EXSIST THEN CHECK IN PUBLIC STORAGE DIRECTORY------
+        for (int i = 0; i < path.size(); i++) {
+            String filePath = path.get(i);
+            if (!new File(filePath).exists()) {
+                filePath = filePath.replace("/external_files/mediapicker", Environment.getExternalStoragePublicDirectory("mediapicker").getPath());
+                path.set(i, filePath);
+            }
+        }
+        //-------LOGIC TO CHECK IF THAT FILE NOT EXSIST THEN CHECK IN PUBLIC STORAGE DIRECTORY------
+
         Intent intent = new Intent();
         intent.setAction(VideoTags.Action.SERVICE_ACTION);
         intent.putExtra(VideoTags.Tags.VIDEO_PATH, (Serializable) path);
@@ -248,6 +263,7 @@ public class VideoActivity extends AppCompatActivity {
         resultIntent.putExtra(VideoPicker.EXTRA_VIDEO_PATH, (Serializable) path);
         setResult(RESULT_OK, resultIntent);
         finish();
+        overridePendingTransition(0, 0);
     }
 
     private void pickVideoWrapper() {
@@ -323,8 +339,9 @@ public class VideoActivity extends AppCompatActivity {
                     pickVideo();
                 } else {
                     // Permission Denied
-                    Toast.makeText(VideoActivity.this, getString(R.string.media_picker_some_permission_is_denied), Toast.LENGTH_SHORT)
-                            .show();
+//                    Toast.makeText(VideoActivity.this, getString(R.string.media_picker_some_permission_is_denied), Toast.LENGTH_SHORT).show();
+                    finish();
+                    overridePendingTransition(0, 0);
                 }
 
                 break;
