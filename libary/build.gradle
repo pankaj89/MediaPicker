@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
 
 //./gradlew bintrayUpload
-publish {
+/*publish {
     userOrg = 'alhazmy13'
     groupId = 'net.alhazmy13.MediaPicker'
     artifactId = 'libary'
@@ -11,7 +11,7 @@ publish {
     desc = 'MediaPicker'
     dryRun = false
     website = 'https://github.com/alhzmy13/MediaPicker'
-}
+}*/
 
 android {
     compileSdkVersion 27
