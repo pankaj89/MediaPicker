@@ -34,7 +34,7 @@ This build `2.x.x` will break backward compatibility and there are a lot of chan
 
 ```gradle
 dependencies {
-	implementation "com.github.pankaj89:MediaPicker:6e5a40b"
+	implementation "com.master.android:mediapicker:1.1"
 }
 ```
 
