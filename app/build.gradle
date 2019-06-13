@@ -3,7 +3,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 27
-    buildToolsVersion '27.0.3'
 
     defaultConfig {
         minSdkVersion 14
@@ -27,8 +26,9 @@ dependencies {
     implementation "com.android.support:appcompat-v7:27.1.0"
     implementation "com.android.support:design:27.1.0"
     implementation "com.android.support:support-v13:27.1.0"
-    implementation project(':libary')
-    implementation project(':rxjava')
+//    implementation project(':libary')
+    compile 'com.master.android:mediapicker:1.0'
+//    implementation project(':rxjava')
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.12'
 }
