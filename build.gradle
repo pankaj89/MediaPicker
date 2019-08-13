@@ -20,7 +20,8 @@ allprojects {
             url 'https://maven.google.com/'
             name 'Google'
         }
-        maven { url "http://dl.bintray.com/agnipankh-pankaj/MediaPicker" }
+        maven { url 'https://jitpack.io' }
+//        maven { url "http://dl.bintray.com/agnipankh-pankaj/MediaPicker" }
     }
 }
 
