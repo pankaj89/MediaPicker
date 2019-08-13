@@ -79,6 +79,13 @@ public interface ImagePickerBuilderBase {
     ImagePicker.Builder allowOnlineImages(boolean allowOnlineImages);
 
     /**
+     * Setup custom request code
+     * @param requestCode the code that will be return on Activity result
+     * @return the image picker . builder
+     */
+    ImagePicker.Builder requestCode(int requestCode);
+
+    /**
      * Build image picker.
      *
      * @return the image picker

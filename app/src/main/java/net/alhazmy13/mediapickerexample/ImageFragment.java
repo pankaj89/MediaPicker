@@ -30,27 +30,22 @@ public class ImageFragment extends Fragment {
     private static final String TAG = "MainActivity";
     private List<String> mPath;
 
-
-    private View view;
+    public static int CUSTOM_REQUEST_CODE = 9876;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if (view == null) {
-            view = inflater.inflate(R.layout.image_layout, container, false);
+        View view = inflater.inflate(R.layout.image_layout, container, false);
 
-            // Find our View instances
-            imageView = view.findViewById(R.id.iv_image);
-            path = view.findViewById(R.id.tv_path);
-            view.findViewById(R.id.bt_pick).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    pickImage();
-                }
-            });
-        } else {
-            container.removeView(view);
-        }
+        // Find our View instancesZ
+        imageView = view.findViewById(R.id.iv_image);
+        path = view.findViewById(R.id.tv_path);
+        view.findViewById(R.id.bt_pick).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pickImage();
+            }
+        });
         return view;
     }
 
@@ -59,6 +54,7 @@ public class ImageFragment extends Fragment {
         new ImagePicker.Builder(getActivity())
                 .mode(ImagePicker.Mode.CAMERA_AND_GALLERY)
                 .allowMultipleImages(true)
+                .requestCode(CUSTOM_REQUEST_CODE)
                 .compressLevel(ImagePicker.ComperesLevel.MEDIUM)
                 .directory(ImagePicker.Directory.DEFAULT)
                 .extension(ImagePicker.Extension.PNG)
@@ -73,7 +69,7 @@ public class ImageFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG, "onActivityResult() called with: requestCode = [" + requestCode + "], resultCode = [" + resultCode + "], data = [" + data + "]");
-        if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == RESULT_OK) {
+        if (requestCode == CUSTOM_REQUEST_CODE && resultCode == RESULT_OK) {
             mPath = data.getStringArrayListExtra(ImagePicker.EXTRA_IMAGE_PATH);
             Log.d(TAG, "onActivityResult: ");
             loadImage();
@@ -82,13 +78,9 @@ public class ImageFragment extends Fragment {
 
     private void loadImage() {
         Log.d(TAG, "loadImage: " + mPath.size());
-        try {
-            if (mPath != null && mPath.size() > 0) {
-                path.setText(mPath.get(0));
-                imageView.setImageBitmap(BitmapFactory.decodeFile(mPath.get(0)));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (mPath != null && mPath.size() > 0) {
+            path.setText(mPath.get(0));
+            imageView.setImageBitmap(BitmapFactory.decodeFile(mPath.get(0)));
         }
     }
 
